@@ -37,12 +37,30 @@ function App() {
     );
   };
 
+  const handleRemoveItem = (itemId) => {
+    setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+  };
+
+  const handleToggleItem = (itemId) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, checked: !item.checked } : item
+      )
+    );
+  };
+  const itemsPacked = items.filter((item) => item.checked).length;
+  const totalItems = items.length;
+
   return (
     <>
       <BackgroundHeading />
       <main>
-        <Header />
-        <ItemList items={items} />
+        <Header itemsPacked={itemsPacked} totalItems={totalItems} />
+        <ItemList
+          items={items}
+          handleRemoveItem={handleRemoveItem}
+          handleToggleItem={handleToggleItem}
+        />
         <Sidebar
           handleAddItem={handleAddItem}
           handleRemoveAllItems={handleRemoveAllItems}
