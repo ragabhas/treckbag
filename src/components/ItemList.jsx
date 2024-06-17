@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import EmptyList from "./EmptyList";
 import Select from "react-select";
 
@@ -14,15 +14,19 @@ export default function ItemList({
   handleToggleItem,
 }) {
   const [sortBy, setSortBy] = useState("default");
-  const sortedItems = [...items].sort((a, b) => {
-    if (sortBy === "packed") {
-      return b.checked - a.checked;
-    } else if (sortBy === "unpacked") {
-      return a.checked - b.checked;
-    } else {
-      return 0;
-    }
-  });
+  const sortedItems = useMemo(
+    () =>
+      [...items].sort((a, b) => {
+        if (sortBy === "packed") {
+          return b.checked - a.checked;
+        } else if (sortBy === "unpacked") {
+          return a.checked - b.checked;
+        } else {
+          return 0;
+        }
+      }),
+    [items, sortBy]
+  );
 
   return (
     <ul className="item-list">
