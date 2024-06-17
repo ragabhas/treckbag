@@ -1,16 +1,18 @@
 import { useRef, useState } from "react";
 import Button from "./Button";
+import { useItemsContext } from "../lib/hooks";
 
-export default function AddItemForm({ onAddItem }) {
+export default function AddItemForm() {
   const [text, setText] = useState("");
   const inputRef = useRef();
+  const { handleAddItem } = useItemsContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     inputRef.current.focus();
     if (!text.trim()) return;
 
-    onAddItem(text);
+    handleAddItem(text);
     setText("");
   };
 
