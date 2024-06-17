@@ -1,7 +1,7 @@
-import { useItemsContext } from "../lib/hooks";
+import { useItemsStore } from "../stores/itemsStore";
 
 export default function Counter() {
-  const { items } = useItemsContext();
+  const items = useItemsStore((state) => state.items);
   const itemsPacked = items.filter((item) => item.checked).length;
   const totalItems = items.length;
   return (
